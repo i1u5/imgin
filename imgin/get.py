@@ -27,13 +27,10 @@ def get(url: str, write_dir: str, delete=True):
         url = 'https://imgur.com/' + url
     found_url = ''
 
-    print('it not album', url)
     album = False
     if "gallery" in url:
         url = url.replace("gallery", "a")
-        print('it album')
     if "/a/" in url:
-        print('it album')
         album = True
         if not url.endswith("blog"):
             url += "/layout/blog"

@@ -36,12 +36,12 @@ def get(url: str, write_dir: str, delete=True):
             url += "/layout/blog"
 
     if not album:
-        print('getting img', url)
-        url = 'https://i.imgur.com/' + url.rsplit('/', 1)[-1].replace('jpeg', '').replace('jpg', '')
-        with open(f'{write_dir}/{url[-12:]}', 'wb') as img:
+        print('Getting img', url)
+        url = 'https://i.imgur.com/' + url.rsplit('/', 1)[-1].replace('jpeg', 'jpg')
+        with open(f'{write_dir}/{url[-11:]}', 'wb') as img:
             img.write(requests.get(url).content)
         if delete:
-            Thread(target=delete_file, args=[f"{write_dir}/{url[-12:]}"]).start()
+            Thread(target=delete_file, args=[f"{write_dir}/{url[-11:]}"]).start()
     else:
         print('Detecting album/gallery images', url)
         soup = bs4.BeautifulSoup(requests.get(url).text, 'html.parser')

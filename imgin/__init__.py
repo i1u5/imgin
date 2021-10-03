@@ -63,4 +63,4 @@ def start_server():
         pass
     mkdir(IMAGE_CACHE)
 
-    run(server='gevent')
+    run(server='gevent', host='0.0.0.0')

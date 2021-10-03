@@ -1,0 +1,4 @@
+venv/*
+helloworld/__pycache__/*
+testdata/*
+.vscode/*

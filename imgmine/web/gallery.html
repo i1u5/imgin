@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+    <head>
+        <meta charself="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>imgmine - minimal & private imgur proxy</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📷</text></svg>">
+        <link rel="stylesheet" href="/static/theme.css">
+    </head>
+    <body>
+      % for img in imgs:
+        <img src="{{img}}" loading="lazy">
+        <br>
+      % end
+      <footer>
+        <small>
+          This website does not claim ownership of any media.
+          <br>This service simply acts as a proxy to Imgur.com and does not store images aside from a temporary cache.
+          <br>Abusive images should be reported to imgur. This website does not create new images/comments.
+        </small>
+      </footer>
+    </body>
+
+</html>

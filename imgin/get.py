@@ -34,6 +34,10 @@ def get(url: str, write_dir: str, delete=True):
         album = True
         if not url.endswith("blog"):
             url += "/layout/blog"
+    else:
+        if url.endswith("jpeg") and not url.endswith("jpg") and not url.endswith("png"):
+            url += ".jpg"
+
 
     if not album:
         print('Getting img', url)

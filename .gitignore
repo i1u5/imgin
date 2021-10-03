@@ -1,4 +1,4 @@
 venv/*
-helloworld/__pycache__/*
+imgin/__pycache__/*
 testdata/*
 .vscode/*

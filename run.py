@@ -1,3 +1,3 @@
-import imgmine
+import imgin
 
-imgmine.start_server()
+imgin.start_server()

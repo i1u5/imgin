@@ -22,6 +22,11 @@
     <li><input type="checkbox"> Comments... maybe</li>
 </ul>
 
+<h2>Using it</h2>
+
+<p>Visit an existing instance like <a href="https://imgin.voidnet.tech">imgin.voidnet.tech</a></p>
+<p>Or, run it with python by installing the requirements.txt and ./run.py. Or use the Dockerfile. Contact me if you want help or find a bug.</p>
+
 Patches, suggestions, complaints, or bugs: email to imgin -@- voidnet.tech
 
 Monero: 88ZoeZVWjG2FKaZjuoGGt1hkhLDyYehE1JZXk68B2SqXUcZpeJ8NdDNKC8J7LnWEfSG3W8Qae8nBhT9sc5E91WWsBdbHPTL

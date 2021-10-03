@@ -2,7 +2,7 @@ from gevent import monkey
 from gevent import sleep
 monkey.patch_all()
 from threading import Thread
-from os import remove, mkdir, path
+from os import remove, mkdir, path, stat
 from shutil import rmtree
 from glob import glob
 
@@ -16,6 +16,9 @@ from .get import get
 from .config import IMAGE_CACHE, SINGLE_IMAGE_DELETE_AFTER_SECS, ALBUM_DELETE_AFTER_SECS, template_dir
 
 
+def get_timestamp_of_file(file):
+    return stat(file).st_ctime
+
 def album(id):
     req_id = str(uuid4())
     req = IMAGE_CACHE
@@ -23,8 +26,15 @@ def album(id):
     get("/a/" + id, req)
 
     imgs = glob(req + "*")
+
+    # sort image order (file creation time)
+    imgs = sorted(imgs, key=get_timestamp_of_file)
+
     for c, img in enumerate(imgs):
         imgs[c] = img.replace(IMAGE_CACHE, '/')
+
+
+
     with open(f'{template_dir}gallery.html', 'r') as img_view:
         tpl = SimpleTemplate(img_view)
     return tpl.render(imgs=imgs)

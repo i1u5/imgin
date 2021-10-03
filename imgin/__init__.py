@@ -60,7 +60,8 @@ def gallery(id=''):
 
 @route('/<img>')
 def hello(img=''):
-
+    if img.endswith("jpeg") and not img.endswith("jpg") and not img.endswith("png"):
+        img += ".jpg"
     if not path.exists(IMAGE_CACHE + img):
         get(img, IMAGE_CACHE)
     return static_file(img, root=IMAGE_CACHE)

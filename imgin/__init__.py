@@ -13,7 +13,7 @@ from bottle import static_file
 from bottle import SimpleTemplate
 
 from .get import get
-from .config import IMAGE_CACHE, SINGLE_IMAGE_DELETE_AFTER_SECS, ALBUM_DELETE_AFTER_SECS, template_dir
+from .config import IMAGE_CACHE, template_dir
 
 
 def get_timestamp_of_file(file):

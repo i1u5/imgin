@@ -1,5 +1,4 @@
 import sys
-from shutil import rmtree
 from os import remove
 from threading import Thread
 
@@ -7,7 +6,7 @@ import requests
 import bs4
 from gevent import sleep
 
-from .config import SINGLE_IMAGE_DELETE_AFTER_SECS, ALBUM_DELETE_AFTER_SECS
+from .config import SINGLE_IMAGE_DELETE_AFTER_SECS
 
 def delete_file(path):
     sleep(SINGLE_IMAGE_DELETE_AFTER_SECS)
@@ -51,6 +50,8 @@ def get(url: str, write_dir: str, delete=True):
                 found_url = "https:" + el['content']
             except KeyError:
                 error("Could not obtain url for detected image")
+                continue
+            if found_url.endswith('ico.jpg'):
                 continue
             print(f"Downloading image {count}: {found_url}")
 

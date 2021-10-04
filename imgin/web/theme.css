@@ -12,3 +12,8 @@ a, a:visited {
 ul{
     list-style-type: none;
 }
+
+img {
+    margin-bottom: 5px;
+    height: 100%;
+}

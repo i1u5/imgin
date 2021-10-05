@@ -4,7 +4,6 @@ monkey.patch_all()
 from threading import Thread
 from os import remove, mkdir, path, stat
 from shutil import rmtree
-from glob import glob
 
 from uuid import uuid4
 
@@ -20,12 +19,16 @@ def get_timestamp_of_file(file):
     return stat(file).st_ctime
 
 def album(id):
-    req_id = str(uuid4())
     req = IMAGE_CACHE
 
     get("/a/" + id, req)
+    found_list_file = IMAGE_CACHE + ("/a/" + id).replace('/', '_')
 
-    imgs = glob(req + "*")
+    with open(found_list_file, 'r') as f:
+        imgs = f.read().split(',')
+
+    for c, img in enumerate(imgs):
+        imgs[c] = IMAGE_CACHE + imgs[c]
 
     # sort image order (file creation time)
     imgs = sorted(imgs, key=get_timestamp_of_file)
@@ -62,6 +65,7 @@ def gallery(id=''):
 def img(img=''):
     if not img.endswith("jpeg") and not img.endswith("jpg") and not img.endswith("png"):
         img = img + ".jpg"
+    img = img.replace('jpeg', 'jpg')
     if not path.exists(IMAGE_CACHE + img):
         get(img, IMAGE_CACHE)
     return static_file(img, root=IMAGE_CACHE)

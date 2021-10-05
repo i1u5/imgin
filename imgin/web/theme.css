@@ -1,8 +1,10 @@
 body{
-    background-color: rgba(8, 6, 37, 0.781);
-    color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin-left: 5%;
+    background-color: rgba(2, 0, 30, 0.8);
+    color: rgba(255, 255, 255, .8);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
+    line-height:1.3;
+    margin:0;
+    padding:3vw;
 }
 
 a, a:visited {
@@ -13,7 +15,12 @@ ul{
     list-style-type: none;
 }
 
+p, ul {
+    max-width: 80ch;
+}
+
 img {
-    margin-bottom: 5px;
-    height: 100%;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 3vw;
 }

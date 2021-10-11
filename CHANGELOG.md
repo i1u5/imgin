@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.3
+
+* Added test coverage for image getter
+* Fixed non album images being included in albums
+
+
 ## 0.0.2
 
 Improved gallery view responsiveness and mac font

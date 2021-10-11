@@ -1,10 +1,11 @@
 import sys
-from os import remove
+from os import remove, write
 from threading import Thread
 
+#from gevent import sleep
+from time import sleep
 import requests
 import bs4
-from gevent import sleep
 
 from .config import IMAGE_CACHE, SINGLE_IMAGE_DELETE_AFTER_SECS
 
@@ -51,6 +52,8 @@ def get(url: str, write_dir: str, delete=True):
         for count, el in enumerate(soup.select('.post-image meta[itemprop="contentUrl"]'), start=1):
             try:
                 found_url = "https:" + el['content']
+                if '?1' in found_url:
+                    continue
             except KeyError:
                 error("Could not obtain url for detected image")
                 continue
@@ -66,7 +69,7 @@ def get(url: str, write_dir: str, delete=True):
             if delete:
                 Thread(target=delete_file, args=[f"{write_dir}{found_url[-11:]}"]).start()
         # Write the found urls to a file with the name of the album so the viewer endpoint can get them
-        found_list_file = IMAGE_CACHE + orig_url.replace('/', '_')
+        found_list_file = write_dir + orig_url.replace('/', '_')
         with open(found_list_file, 'w') as f:
             f.write(','.join(found_urls))
         Thread(target=delete_file, args=[found_list_file]).start()

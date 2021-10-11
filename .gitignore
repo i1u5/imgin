@@ -2,3 +2,4 @@ venv/*
 imgin/__pycache__/*
 testdata/*
 .vscode/*
+*.egg-info

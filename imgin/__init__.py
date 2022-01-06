@@ -12,7 +12,7 @@ from bottle import static_file
 from bottle import SimpleTemplate
 
 from .get import get
-from .config import IMAGE_CACHE, template_dir
+from .config import IMAGE_CACHE, template_dir, bind_ip, bind_port
 
 
 def get_timestamp_of_file(file):
@@ -78,4 +78,4 @@ def start_server():
         pass
     mkdir(IMAGE_CACHE)
 
-    run(server='gevent', host='0.0.0.0')
+    run(server='gevent', host=bind_ip, port=bind_port)

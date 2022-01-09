@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.4
+
+* Improved image scraping (Thanks https://austinhuang.me/)
+* Added bind address/port to config.py (Thanks @a9)
+
+
 ## 0.0.3
 
 * Added test coverage for image getter

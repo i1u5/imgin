@@ -21,8 +21,8 @@ def get_timestamp_of_file(file):
 def album(id):
     req = IMAGE_CACHE
 
-    get("/a/" + id, req)
-    found_list_file = IMAGE_CACHE + ("/a/" + id).replace('/', '_')
+    get("a/" + id, req)
+    found_list_file = IMAGE_CACHE + ("a/" + id).replace('/', '_')
 
     with open(found_list_file, 'r') as f:
         imgs = f.read().split(',')

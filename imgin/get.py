@@ -25,15 +25,13 @@ def error(msg):
 def get(url: str, write_dir: str, delete=True):
     orig_url = url
     if not url.startswith('https://imgur.com/'):
-        url = 'https://imgur.com' + url
     found_url = ''
     found_urls = []
     found_list_file = ''
+        url = 'https://imgur.com/' + url
 
     album = False
-    if "gallery" in url:
-        url = url.replace("gallery", "a")
-    if "/a/" in url:
+    if url.startswith("https://imgur.com/a/"):
         album = True
         if not url.endswith("blog"):
             url += "/layout/blog"

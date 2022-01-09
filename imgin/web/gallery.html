@@ -13,8 +13,11 @@
         <h1>{{title}}</h1>
       % end
       % for img in imgs:
-        <a href="{{img}}"><img src="{{img}}" loading="lazy"></a>
-        <br>
+        % if img[1] != '':
+        <h2>{{img[1]}}</h2>
+        % end
+        <p>{{img[2]}}</p>
+        <a href="{{img[0]}}"><img src="{{img[0]}}" loading="lazy"></a>
       % end
       <footer>
         <small>

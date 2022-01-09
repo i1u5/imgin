@@ -46,9 +46,10 @@ def get(url: str, write_dir: str, delete=True):
         found_url = ''
         found_urls = []
         found_list_file = ''
+        title = ''
+        metas = []
         print('Detecting album/gallery images (contentUrl)', url)
         soup = bs4.BeautifulSoup(requests.get(url).text, 'html.parser')
-        title = ''
         try:
             title = soup.select('meta[property="og:title"]')[0]['content']
             if title == "Imgur":
@@ -81,9 +82,22 @@ def get(url: str, write_dir: str, delete=True):
 
             if delete:
                 Thread(target=delete_file, args=[f"{write_dir}{found_url[-11:]}"]).start()
+
+            subtitle = ''
+            try:
+                subtitle = minisoup.select('.post-image-title')[0].string
+            except IndexError:
+                subtitle = ''
+            desc = ''
+            try:
+                desc = minisoup.select('.post-image-description')[0].string
+            except IndexError:
+                desc = ''
+            date = ''
+            metas.append((subtitle, desc))
         # Write the found urls to a file with the name of the album so the viewer endpoint can get them
         found_list_file = write_dir + orig_url.replace('/', '_')
         with open(found_list_file, 'w') as f:
             f.write(','.join(found_urls))
         Thread(target=delete_file, args=[found_list_file]).start()
-        return title
+        return title, metas

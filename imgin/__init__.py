@@ -21,7 +21,7 @@ def get_timestamp_of_file(file):
 def album(id):
     req = IMAGE_CACHE
 
-    title = get("a/" + id, req)
+    title, metas = get("a/" + id, req)
     found_list_file = IMAGE_CACHE + ("a/" + id).replace('/', '_')
 
     with open(found_list_file, 'r') as f:
@@ -34,7 +34,7 @@ def album(id):
     imgs = sorted(imgs, key=get_timestamp_of_file)
 
     for c, img in enumerate(imgs):
-        imgs[c] = img.replace(IMAGE_CACHE, '/')
+        imgs[c] = (img.replace(IMAGE_CACHE, '/'),  metas[c][0], metas[c][1])
 
 
 

@@ -25,9 +25,6 @@ def error(msg):
 def get(url: str, write_dir: str, delete=True):
     orig_url = url
     if not url.startswith('https://imgur.com/'):
-    found_url = ''
-    found_urls = []
-    found_list_file = ''
         url = 'https://imgur.com/' + url
 
     album = False
@@ -45,42 +42,39 @@ def get(url: str, write_dir: str, delete=True):
         if delete:
             Thread(target=delete_file, args=[f"{write_dir}/{url[-11:]}"]).start()
     else:
+        found_url = ''
+        found_urls = []
+        found_list_file = ''
         print('Detecting album/gallery images (contentUrl)', url)
         soup = bs4.BeautifulSoup(requests.get(url).text, 'html.parser')
-        for count, el in enumerate(soup.select('.post-image meta[itemprop="contentUrl"]'), start=1):
+        for count, el in enumerate(soup.select('.post-image-container'), start=1):
+            if el is None:
+                continue
+            minisoup = bs4.BeautifulSoup(str(el), 'html.parser')
             try:
-                found_url = "https:" + el['content']
+                found_url = "https:" + minisoup.select('.post-image meta[itemprop="contentUrl"]')[0]['content']
                 if '?1' in found_url:
                     continue
-            except KeyError:
-                error("Could not obtain url for detected image (contentUrl)")
-                continue
-            if found_url.endswith('ico.jpg'):
-                continue
-            found_urls.append(found_url[-11:])
-            write(count, found_url, write_dir, delete)
-        if len(found_urls) == 0:
-            print('Detecting album/gallery images (id)', url)
-            for count, el in enumerate(soup.select('.post-image-container'), start=1):
+            except (KeyError, IndexError):
+                error("Could not obtain url for detected image (contentUrl), trying id method")
                 try:
                     found_url = "https://i.imgur.com/" + el['id'] + ".jpg" # equivalent to .png
                 except KeyError:
                     error("Could not obtain url for detected image (id)")
                     continue
-                found_urls.append(found_url[-11:])
-                write(count, found_url, write_dir, delete)
+            if found_url.endswith('ico.jpg'):
+                continue
+            found_urls.append(found_url[-11:])
+            print(f"Downloading image {count}: {found_url}")
+
+            print("Writing image", f"{write_dir}{found_url[-11:]}")
+            with open(f"{write_dir}{found_url[-11:]}", "wb") as f:
+                f.write(requests.get(found_url).content)
+
+            if delete:
+                Thread(target=delete_file, args=[f"{write_dir}{found_url[-11:]}"]).start()
         # Write the found urls to a file with the name of the album so the viewer endpoint can get them
         found_list_file = write_dir + orig_url.replace('/', '_')
         with open(found_list_file, 'w') as f:
             f.write(','.join(found_urls))
         Thread(target=delete_file, args=[found_list_file]).start()
-
-def write(count: int, found_url: str, write_dir: str, delete=True):
-    print(f"Downloading image {count}: {found_url}")
-
-    print("Writing image", f"{write_dir}{found_url[-11:]}")
-    with open(f"{write_dir}{found_url[-11:]}", "wb") as f:
-        f.write(requests.get(found_url).content)
-
-    if delete:
-        Thread(target=delete_file, args=[f"{write_dir}{found_url[-11:]}"]).start()

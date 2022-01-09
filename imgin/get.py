@@ -41,12 +41,20 @@ def get(url: str, write_dir: str, delete=True):
             img.write(requests.get(url).content)
         if delete:
             Thread(target=delete_file, args=[f"{write_dir}/{url[-11:]}"]).start()
+        return None
     else:
         found_url = ''
         found_urls = []
         found_list_file = ''
         print('Detecting album/gallery images (contentUrl)', url)
         soup = bs4.BeautifulSoup(requests.get(url).text, 'html.parser')
+        title = ''
+        try:
+            title = soup.select('meta[property="og:title"]')[0]['content']
+            if title == "Imgur":
+                title = ''
+        except (KeyError, IndexError):
+            title = ''
         for count, el in enumerate(soup.select('.post-image-container'), start=1):
             if el is None:
                 continue
@@ -78,3 +86,4 @@ def get(url: str, write_dir: str, delete=True):
         with open(found_list_file, 'w') as f:
             f.write(','.join(found_urls))
         Thread(target=delete_file, args=[found_list_file]).start()
+        return title

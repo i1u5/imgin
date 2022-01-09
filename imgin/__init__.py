@@ -21,7 +21,7 @@ def get_timestamp_of_file(file):
 def album(id):
     req = IMAGE_CACHE
 
-    get("a/" + id, req)
+    title = get("a/" + id, req)
     found_list_file = IMAGE_CACHE + ("a/" + id).replace('/', '_')
 
     with open(found_list_file, 'r') as f:
@@ -40,7 +40,7 @@ def album(id):
 
     with open(f'{template_dir}gallery.html', 'r') as img_view:
         tpl = SimpleTemplate(img_view)
-    return tpl.render(imgs=imgs)
+    return tpl.render(imgs=imgs, title=title)
 
 @route('/')
 @route('')

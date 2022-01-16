@@ -21,8 +21,8 @@ def get_timestamp_of_file(file):
 def album(id):
     req = IMAGE_CACHE
 
-    get("/a/" + id, req)
-    found_list_file = IMAGE_CACHE + ("/a/" + id).replace('/', '_')
+    title, metas = get("a/" + id, req)
+    found_list_file = IMAGE_CACHE + ("a/" + id).replace('/', '_')
 
     with open(found_list_file, 'r') as f:
         imgs = f.read().split(',')
@@ -34,13 +34,13 @@ def album(id):
     imgs = sorted(imgs, key=get_timestamp_of_file)
 
     for c, img in enumerate(imgs):
-        imgs[c] = img.replace(IMAGE_CACHE, '/')
+        imgs[c] = (img.replace(IMAGE_CACHE, '/'),  metas[c][0], metas[c][1])
 
 
 
     with open(f'{template_dir}gallery.html', 'r') as img_view:
         tpl = SimpleTemplate(img_view)
-    return tpl.render(imgs=imgs)
+    return tpl.render(imgs=imgs, title=title)
 
 @route('/')
 @route('')

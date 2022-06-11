@@ -3,10 +3,8 @@
 
     <head>
         <meta charself="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{{title + " - imgin" if title else "imgin - minimal & private imgur proxy"}}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📷</text></svg>">
-        <link rel="stylesheet" href="/static/theme.css">
     </head>
     <body>
       % if title != '':
@@ -19,15 +17,6 @@
         <p>{{img[2]}}</p>
         <a href="{{img[0]}}"><img src="{{img[0]}}" loading="lazy"></a>
       % end
-      <footer>
-        <small>
-          Powered by <a href="https://voidnet.tech/">VoidNetwork LLC</a><br>
-          This website does not claim ownership of any media.
-          <br>This service simply acts as a proxy to Imgur.com and does not store images aside from a temporary cache.
-          <br>Abusive images should be reported to imgur. This website does not create new images/comments.
-          <br>Do not use this service to facilitate scraping or as an image CDN.
-        </small>
-      </footer>
     </body>
 
 </html>

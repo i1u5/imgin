@@ -81,8 +81,6 @@ def start_server():
     ON_HEROKU = environ.get('ON_HEROKU')
 
     if ON_HEROKU:
-        port = int(environ.get('PORT', 17995))
-    else:
-        port = bind_port
+        bind_port = int(environ.get('PORT', 17995))
 
     run(server='gevent', host=bind_ip, port=bind_port)

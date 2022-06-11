@@ -69,8 +69,12 @@ def get(url: str, write_dir: str, delete=True):
                 try:
                     found_url = "https://i.imgur.com/" + el['id'] + ".jpg" # equivalent to .png
                 except KeyError:
-                    error("Could not obtain url for detected image (id)")
-                    continue
+                    error("Could not obtain url for detected image (id), trying reverse id method")
+                    try:
+                        found_url = "https://i.imgur.com/" + el['id'] + ".png" # equivalent to .png
+                    except KeyError:
+                        error("Could not obtain url for detected image (id)")
+                        continue
             if found_url.endswith('ico.jpg'):
                 continue
             found_urls.append(found_url[-11:])

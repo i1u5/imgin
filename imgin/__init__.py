@@ -63,8 +63,6 @@ def gallery(id=''):
 
 @route('/<img>')
 def img(img=''):
-    if not img.endswith("jpeg") and not img.endswith("jpg") and not img.endswith("png"):
-        img = img + ".jpg"
     img = img.replace('jpeg', 'jpg')
     if not path.exists(IMAGE_CACHE + img):
         get(img, IMAGE_CACHE)

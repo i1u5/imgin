@@ -78,9 +78,7 @@ def start_server():
         pass
     mkdir(IMAGE_CACHE)
     
-    ON_HEROKU = environ.get('ON_HEROKU')
-
-    if ON_HEROKU:
+    if 'PORT' in environ:
         portx = int(environ.get('PORT', 17995))
     else:
         portx = bind_port

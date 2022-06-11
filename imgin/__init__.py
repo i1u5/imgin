@@ -2,7 +2,7 @@ from gevent import monkey
 from gevent import sleep
 monkey.patch_all()
 from threading import Thread
-from os import remove, mkdir, path, stat
+from os import remove, mkdir, path, stat, environ
 from shutil import rmtree
 
 from uuid import uuid4
@@ -77,5 +77,12 @@ def start_server():
     except FileNotFoundError:
         pass
     mkdir(IMAGE_CACHE)
+    
+    ON_HEROKU = os.environ.get('ON_HEROKU')
+
+    if ON_HEROKU:
+        port = int(os.environ.get('PORT', 17995))
+    else:
+        port = bind_port
 
     run(server='gevent', host=bind_ip, port=bind_port)

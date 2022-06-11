@@ -5,6 +5,8 @@ body{
     line-height:1.3;
     margin:0;
     padding:3vw;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 a, a:visited {
